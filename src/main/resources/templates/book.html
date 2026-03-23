@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IU Campus Room Reservation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white-800 text-white min-h-screen p-12">
+
+  <!-- Header -->
+  <div class="max-w-lg mx-auto">
+    <a href="/" class="text-gray-400 hover:text-white text-sm mb-6 inline-block"> Back to Home</a>
+    <h1 class="text-2xl font-extrabold mb-2">Reserve a Room</h1>
+    <p class="text-white mb-8">Fill out the form below to reserve a campus room.</p> 
+
+    <!-- Booking Form --> 
+    <form id="bookingForm" class="bg-gray-900 border border-gray-800 p-8 rounded-2xl space-y-5">
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Your Name</label>
+        <input id="userName" type="text" placeholder="e.g. John Smith"
+               class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-white"/>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Room ID</label>
+        <input id="roomID" type="text" placeholder="e.g. ROOM-101"
+               class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-white"/>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Date</label>
+        <input id="date" type="date"
+               class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-white"/>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">Start Time</label>
+          <input id="startTime" type="time"
+                 class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-white"/>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">End Time</label>
+          <input id="endTime" type="time"
+                 class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-white"/>
+        </div>
+      </div>
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-4 rounded-xl font-bold text-lg mt-2">
+        Confirm Booking
+      </button>
+    </form>
+
+    <!-- Success / Error Message -->
+    <div id="msg" class="mt-4 text-center text-lg hidden"></div>
+  </div>
+
+  <script>
+    <!-- This is the booking handler-->
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // This gathers the form data put into a JSON obj then to be sent to the API
+      const body = {
+        userName:  document.getElementById('userName').value,
+        roomID:    document.getElementById('roomID').value,
+        date:      document.getElementById('date').value,
+        startTime: document.getElementById('startTime').value,
+        endTime:   document.getElementById('endTime').value,
+      };
+      // This sends the booking request to the API then handles the responses 
+      try {
+        const res = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        const msg = document.getElementById('msg');
+        msg.classList.remove('hidden');
+
+        if (res.ok) {
+          msg.className = 'mt-4 text-center text-lg text-green-400';
+          msg.textContent = ' Booking confirmed! View it in My Bookings.';
+          document.getElementById('bookingForm').reset();
+        } else {
+          msg.className = 'mt-4 text-center text-lg text-red-400';
+          msg.textContent =  'Something went wrong. Please try again.';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

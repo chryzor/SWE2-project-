@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: campus-reservation-app
+    ports:
+      - "8080:8080"
+    volumes:
+      # Persist the SQLite database file on your machine
+      - ./campus.db:/app/campus.db
+    restart: unless-stopped
