@@ -20,7 +20,7 @@ public class BookingService {
     // Save a new booking to the database
     public Booking save(Booking booking) {
         boolean conflict = bookingRepository.existsConflict(
-            booking.getRoom().getId(),
+            booking.getRoomID(),
             booking.getStartTime(),
             booking.getEndTime()
         );
@@ -28,7 +28,7 @@ public class BookingService {
         if (conflict) {
             throw new IllegalStateException("This room is already booked for that time slot.");
         }
-        
+
         return bookingRepository.save(booking);
     }
     // Delete a booking by its ID
