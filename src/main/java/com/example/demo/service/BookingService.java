@@ -21,9 +21,9 @@ public class BookingService {
     public Booking save(Booking booking) {
         boolean conflict = bookingRepository.existsConflict(
             booking.getRoomID(),
+            booking.getDate(),
             booking.getStartTime(),
             booking.getEndTime()
-            booking.getDate()
         );
         // checking if there is conflict with the booking 
         if (conflict) {
