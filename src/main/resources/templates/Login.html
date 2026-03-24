@@ -43,12 +43,12 @@
   <script>
     // Check for login error in URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('error')) {
+    if (urlParams.has('error')) {
       const errorDiv = document.getElementById('error-message');
       errorDiv.textContent = 'Invalid username or password';
       errorDiv.style.display = 'block';
     }
-    if (urlParams.get('logout')) {
+    if (urlParams.has('logout')) {
       const errorDiv = document.getElementById('error-message');
       errorDiv.textContent = 'You have been logged out';
       errorDiv.style.display = 'block';
