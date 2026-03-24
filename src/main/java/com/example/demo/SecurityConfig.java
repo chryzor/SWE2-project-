@@ -37,7 +37,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
             .username("chnbalta@iu.edu")
-            .password("password")
+            .password("{noop}password") // did noop for the reason that it is not a real password 
             .roles("USER")
             .build();
         return new InMemoryUserDetailsManager(user);

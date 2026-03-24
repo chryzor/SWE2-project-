@@ -9,4 +9,13 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> findByUserName(String userName); // Find bookings by username
     List<Booking> findByRoomIDAndDate(String roomID, String date); // Find bookings by room ID and date
+
+    // this is  query to checck if there is a conflicts with the booking 
+    @Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.roomID = :roomID " +
+           "AND b.date = :date " +
+           "AND b.startTime < :endTime AND b.endTime > :startTime")
+    boolean existsConflict(@Param("roomID") String roomID,
+                           @Param("date") String date,
+                           @Param("startTime") String startTime,
+                           @Param("endTime") String endTime);
 }
