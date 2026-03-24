@@ -12,6 +12,12 @@ public class HomeController {
         return "index";
     }
 
+    // Serve the login page
+    @GetMapping("/login")
+    public String login() {
+        return "Login";
+    }
+
     // Serve the booking form page
     @GetMapping("/book")
     public String book() {

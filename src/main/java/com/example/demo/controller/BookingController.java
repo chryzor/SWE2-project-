@@ -13,19 +13,19 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    // GET /api/bookings — return all bookings as JSON
+    //bookings  return all bookings as JSON
     @GetMapping
     public List<Booking> getAll() {
         return bookingService.getAllBookings();
     }
 
-    // POST /api/bookings — create a new booking
+    //bookings create a new booking
     @PostMapping
     public Booking create(@RequestBody Booking booking) {
         return bookingService.save(booking);
     }
 
-    // DELETE /api/bookings/{id} — cancel a booking
+    // cancel a booking
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         bookingService.delete(id);

@@ -13,7 +13,7 @@ public class BuildingController {
     @Autowired
     private BuildingService buildingService;
 
-    // GET /api/buildings — return all buildings as JSON
+    // GET /api/buildings  return all buildings as JSON
     @GetMapping
     public List<Building> getAll() {
         return buildingService.getAllBuildings();

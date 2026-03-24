@@ -22,5 +22,6 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 COPY campus.db campus.db      
 
+# This expose is the application port
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
