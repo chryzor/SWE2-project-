@@ -23,6 +23,7 @@ public class BookingService {
             booking.getRoomID(),
             booking.getStartTime(),
             booking.getEndTime()
+            booking.getDate()
         );
         // checking if there is conflict with the booking 
         if (conflict) {
