@@ -8,14 +8,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.ForwardedHeaderFilter;
+
 
 @Configuration
 public class SecurityConfig {
+    
+    // without this, the app will have issues with redirects and URL generation 
+    @Bean
+    public ForwardedHeaderFilter forwardedHeaderFilter() {
+        return new ForwardedHeaderFilter();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.disable())  // Allow iframe embedding if needed
+            )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/css/**", "/js/**").permitAll()  // getting access to login without authentication
                 .anyRequest().authenticated()  // Require authentication for everything else
@@ -34,16 +45,13 @@ public class SecurityConfig {
     }
 
     @Bean
-public UserDetailsService userDetailsService() {
-    UserDetails user = User.builder()
-        .username("admin")
-        .password("{noop}password")
-        .roles("USER")
-        .build();
-    return new InMemoryUserDetailsManager(user);
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+            .username("admin")
+            .password("{noop}password")
+            .roles("USER")
+            .build();
+        return new InMemoryUserDetailsManager(user);
+    }
+
 }
-
-
-}
-
-
