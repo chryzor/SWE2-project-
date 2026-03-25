@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +12,19 @@
     <h1 class="text-2xl font-semibold text-gray-800 mb-1">Campus Reservation</h1>
     <p class="text-sm text-gray-500 mb-6">Login to your account</p>
 
-    <div id="error-message" class="mb-4 text-red-600 text-sm" style="display: none;"></div>
+    <div th:if="${param.error}" class="mb-4 text-sm text-red-600">
+      Invalid username or password
+    </div>
+    <div th:if="${param.logout}" class="mb-4 text-sm text-green-600">
+      You have been logged out
+    </div>
 
-    <form action="/login" method="post">
+    <form th:action="@{/login}" method="post">
       <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1" for="username">Email</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="username">Username</label>
         <input
-          type="email" id="username" name="username" placeholder="you@university.edu"
+          type="text" id="username" name="username" placeholder="admin" required
+          required
           class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
       </div>
@@ -26,7 +32,8 @@
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700 mb-1" for="password">Password</label>
         <input
-          type="password" id="password" name="password" placeholder="••••••••"
+          type="password" id="password" name="password" placeholder="password" required
+          required
           class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
       </div>
@@ -39,22 +46,6 @@
       </button>
     </form>
   </div>
-
-  <script>
-    // Check for login error in URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('error if the login is failing ')) {
-      const errorDiv = document.getElementById('error-message');
-      errorDiv.textContent = 'Invalid username or password';
-      errorDiv.style.display = 'block';
-    }
-    if (urlParams.has('logout')) {
-      const errorDiv = document.getElementById('error-message');
-      errorDiv.textContent = 'You have been logged out';
-      errorDiv.style.display = 'block';
-      errorDiv.className = 'mb-4 text-green-600 text-sm';
-    }
-  </script>
 
 </body>
 </html>

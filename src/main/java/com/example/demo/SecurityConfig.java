@@ -22,7 +22,7 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")  // Custom login page
-                .defaultSuccessUrl("/", true)  // taking you to the home page after  login
+                .defaultSuccessUrl("/book", true)  // taking you to the booking page after login
                 .failureUrl("/login?error")  // get an error message if login fails
                 .permitAll()
             )
@@ -34,12 +34,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-            .username("chnbalta@iu.edu")
-            .password("{noop}password") // did noop for the reason that it is not a real password 
-            .roles("USER")
-            .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+public UserDetailsService userDetailsService() {
+    UserDetails user = User.builder()
+        .username("admin")
+        .password("{noop}password")
+        .roles("USER")
+        .build();
+    return new InMemoryUserDetailsManager(user);
 }
+
+
+}
+
+
