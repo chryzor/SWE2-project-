@@ -86,6 +86,11 @@
           msg.className = 'mt-4 text-center text-lg text-green-400';
           msg.textContent = ' Booking confirmed! View it in My Bookings.';
           document.getElementById('bookingForm').reset();
+        } else if (res.status === 409) {
+          // Handle conflict - room already booked
+          const errorData = await res.json();
+          msg.className = 'mt-4 text-center text-lg text-red-400';
+          msg.textContent = errorData.error || 'This time slot is already booked. Please choose a different time.';
         } else {
           msg.className = 'mt-4 text-center text-lg text-red-400';
           msg.textContent =  'Something went wrong. Please try again.';
