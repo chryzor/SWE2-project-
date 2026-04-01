@@ -15,7 +15,7 @@ public class HomeController {
     // Serve the login page
     @GetMapping("/login")
     public String login() {
-        return "Login";
+        return "login";
     }
 
     // Serve the booking form page
